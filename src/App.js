@@ -29,7 +29,7 @@ class App extends Component {
 
   renderInitialView() {
     return (
-      <WorkerView skills={skillMockData.data[0][0]} positions = {positionMockData.data}/>
+      <WorkerView skills={skillMockData.data[0][0]} positions={positionMockData.data}/>
 
     )
   }
@@ -44,16 +44,26 @@ class App extends Component {
   render() {
     return (
       <MuiThemeProvider>
-        <div className="App">
-          <header className="App-header">
+        <div className="container">
+          <div className="App row">
+            <header className="App-header">
 
-            <h1 className="App-title">TalentAtlas</h1>
-            <button onClick={this.hanndleMyViewCLick}> test</button>
-            {this.state.view  ? this.renderInitialView() : this.renderMyView()}
+              <div className="col-sm-8">
+                <h1 className="App-title ">TalentAtlas</h1>
+              </div>
+              <div className="col-sm-offset-2 col-sm-2 ">
+                <button className="btn btn-primary logIn" onClick={this.hanndleMyViewCLick}> Vaheta vaadet</button>
 
-          </header>
 
+              </div>
+
+
+            </header>
+
+          </div>
+          {this.state.view ? this.renderInitialView() : this.renderMyView()}
         </div>
+
       </MuiThemeProvider>
     );
   }

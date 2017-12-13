@@ -2,6 +2,7 @@ import React from 'react';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import Chip from 'material-ui/Chip';
+import TextField from 'material-ui/TextField';
 
 class WorkerView extends React.Component {
   constructor(props) {
@@ -10,15 +11,6 @@ class WorkerView extends React.Component {
       search: '',
       value: null,
       selectedSKills: []
-    };
-    this.styles = {
-      chip: {
-        margin: 4,
-      },
-      wrapper: {
-        display: 'flex',
-        flexWrap: 'wrap',
-      },
     };
   }
 
@@ -41,7 +33,12 @@ class WorkerView extends React.Component {
   }
 
   getSortedAndFilteredData() {
+    if (this.state.value){
 
+      return (this.state.value[1].filter((data) => {
+        return data.toLowerCase().includes(this.state.search.toLowerCase());
+      }));
+    }
     return (this.props.skills.filter((data) => {
       return data.toLowerCase().includes(this.state.search.toLowerCase());
     }));
@@ -50,33 +47,39 @@ class WorkerView extends React.Component {
 
   render() {
     console.log(this.props)
+    console.log(22, this.state.value)
+
     return (
-      <div>
-        <h2>test esinemne vaade</h2>
-        <div className="input-group" style={{lenght: '100px'}}>
-          <input type="text" className="form-control" placeholder="Search by name..." value={this.state.search}
-                 onChange={(event) => this.updateSearch(event)}/>
-          <span className="input-group-btn">
-                <button className="btn btn-default" type="button">
-                  <i className="glyphicon glyphicon-search"></i>
-                </button>
-              </span>
+      <div className="container">
+        <h2>Töötaja vaade</h2>
+        <div className="row">
+          <div className="col-sm-6 ">
+            <TextField
+              id="text-field-controlled"
+              floatingLabelText="Otsi oskusi"
+              value={this.state.search}
+              onChange={(event) => this.updateSearch(event)}
+            />
+          </div>
+          <div className="col-sm-4">
+            <SelectField onChange={this.handleChange} value={this.state.value? this.state.value: null} floatingLabelText={"Vali positsioon"}>
+              {this.state.value ? <MenuItem value={null} primaryText="Kõik positsioonid" /> : null}
+              {this.props.positions.map((position, i) => {
+                  return (<MenuItem key={i} value={position} primaryText={position[0]}/>)
+                }
+              )}
+            </SelectField>
+          </div>
         </div>
-        <SelectField onChange={this.handleChange} floatingLabelText="Vali positsioon">
-          {this.props.positions.map((position, i) => {
-              return (<MenuItem key={i} value={position} primaryText={position[0]}/>)
-            }
-          )}
-        </SelectField>
-        <div>
-          <div className={{display: 'flex', flexWrap: 'wrap'}}>
+
+        <div className="row">
+          <div>
             {this.getSortedAndFilteredData().map((skill, i) => {
               console.log(skill)
               return (
                 <Chip
                   key={i}
-                  // onRequestDelete={() => this.handleRequestDelete(data.key)}
-                  style={{margin: "10px"}}
+                  style={{display: "inline-block", margin: "4px"}}
                 >
                   {skill}
                 </Chip> )
