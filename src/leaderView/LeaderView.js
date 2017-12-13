@@ -95,7 +95,7 @@ class LeaderView extends React.Component {
                   <Chip
                     onRequestDelete={() => this.handleTalentRemove(skill)}
                     key={i}
-                    style={{padding: "5px", margin: "10px", display: 'inline'}}
+                    style={{padding: "10px", margin: "10px", display: 'inline'}}
                   >
                     {skill}
                   </Chip> )
