@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
+import LeaderViewContainer from './leaderView/LeaderViewContainer'
+import LeaderView from './leaderView/LeaderView'
 import './App.css';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 class App extends Component {
   constructor(props) {
@@ -28,22 +31,24 @@ class App extends Component {
 
   renderMyView() {
     return (
-      <h2>test teine vaade</h2>
+      <LeaderView/>
     )
   }
 
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
+      <MuiThemeProvider>
+        <div className="App">
+          <header className="App-header">
 
-          <h1 className="App-title">TalentAtlas</h1>
-          <button onClick={this.hanndleMyViewCLick}> test</button>
-          {this.state.view  ? this.renderInitialView() : this.renderMyView()}
+            <h1 className="App-title">TalentAtlas</h1>
+            <button onClick={this.hanndleMyViewCLick}> test</button>
+            {this.state.view  ? this.renderInitialView() : this.renderMyView()}
 
-        </header>
+          </header>
 
-      </div>
+        </div>
+      </MuiThemeProvider>
     );
   }
 }
