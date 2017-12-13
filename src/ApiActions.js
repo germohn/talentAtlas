@@ -23,6 +23,8 @@ class ApiActions {
         '   order by seoseid desc\n' +
         '   return p.name, seoseid, punkte, Kompetentse')
         .then(result => result.data);
+    } else {
+      return Promise.resolve([]);
     }
 
   }

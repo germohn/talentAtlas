@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import LeaderViewContainer from './leaderView/LeaderViewContainer'
 import LeaderView from './leaderView/LeaderView'
 import './App.css';
 import positionMockData from './positionMockData';
