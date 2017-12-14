@@ -44,7 +44,9 @@ class SkillComponent extends React.Component {
     console.log({name: this.props.name, skillName:this.props.skill.name, skillLevel: this.state.slider, comment: this.state.comment })
     ApiActions.saveSkillQuery({name: this.props.name, skillName:this.props.skill.name, skillLevel: this.state.slider, comment: this.state.comment })
       .then(result =>{
-        console.log(result)
+        this.setState({
+          open: false
+        })
       } );
   }
 
