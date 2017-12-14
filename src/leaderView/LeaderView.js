@@ -1,6 +1,6 @@
 import React from 'react';
 import * as R from 'ramda';
-import { AutoComplete, Card, CardHeader, CardText, Chip, FlatButton, Paper } from 'material-ui';
+import { AutoComplete, Card, CardHeader, CardText, Chip, FlatButton } from 'material-ui';
 import ApiActions from '../ApiActions';
 
 const initialState = {
@@ -53,39 +53,39 @@ class LeaderView extends React.Component {
     });
   }
 
-  handleChange(property, value) {
-    this.setState({ [property]: value });
-  }
-
   render() {
     return (
-      <Paper>
-        <div>
-          <AutoComplete
-            id={'searchAutocomplete'}
-            floatingLabelText={'Vali oskused'}
-            filter={AutoComplete.caseInsensitiveFilter}
-            dataSource={this.state.talents}
-            openOnFocus={true}
-            onNewRequest={item => this.handleTalentSelect(item)}
-            onUpdateInput={searchText => this.setState({
-              searchString: searchText,
-            })}
-            searchText={this.state.searchString}
-            listStyle={listStyle}
-          />
+      <div>
+        <div className="row">
+          <div className="col-md-6">
+            <AutoComplete
+              id={'searchAutocomplete'}
+              floatingLabelText={'Vali oskused'}
+              filter={AutoComplete.caseInsensitiveFilter}
+              dataSource={this.state.talents}
+              openOnFocus={true}
+              onNewRequest={item => this.handleTalentSelect(item)}
+              onUpdateInput={searchText => this.setState({
+                searchString: searchText,
+              })}
+              searchText={this.state.searchString}
+              listStyle={listStyle}
+              fullWidth={true}
+            />
+          </div>
+          <div className="col-md-6">
+            <FlatButton
+              label={'Otsi töötajaid'}
+              primary={true}
+              onClick={this.searchPeople}
+            />
 
-          <FlatButton
-            label={'Otsi töötajaid'}
-            primary={true}
-            onClick={this.searchPeople}
-          />
-
-          <FlatButton
-            label={'Tühjenda kõik'}
-            secondary={true}
-            onClick={this.clearAll}
-          />
+            <FlatButton
+              label={'Tühjenda kõik'}
+              secondary={true}
+              onClick={this.clearAll}
+            />
+          </div>
         </div>
         <div>
           {this.state.selectedTalents.length > 0 ?
@@ -95,7 +95,7 @@ class LeaderView extends React.Component {
                   <Chip
                     onRequestDelete={() => this.handleTalentRemove(skill)}
                     key={i}
-                    style={{padding: "10px", margin: "10px", display: 'inline'}}
+                    style={{ display: 'inline-flex', marginRight: '2px' }}
                   >
                     {skill}
                   </Chip> )
@@ -134,7 +134,7 @@ class LeaderView extends React.Component {
             </div>
           : 'Töötajaid pole leitud'}
         </div>
-      </Paper>
+      </div>
     );
   }
 }
