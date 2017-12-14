@@ -18,6 +18,7 @@ class WorkerView extends React.Component {
       talents:[],
       roles: []
     };
+    // this.handleChange = this.handleChange.bind(this)
 
     ApiActions.queryAllSkills()
       .then(result => {

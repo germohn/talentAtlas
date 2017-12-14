@@ -14,8 +14,8 @@
     "redux": "^3.7.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "webpack --config webpack.config.js && cp ./public/index.html dist/index.html",
+    "start": "webpack-dev-server --open --config webpack.config.js",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },

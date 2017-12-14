@@ -13,7 +13,11 @@ module.exports = {
 
   },
   devtool: "inline-source-map",
-
+  devServer: {
+    port: 3001,
+    contentBase: 'public/',
+    historyApiFallback: true
+  },
   module: {
     rules: [
       {test: /\.js/, use: 'babel-loader'},
