@@ -5,6 +5,8 @@ import Chip from 'material-ui/Chip';
 import TextField from 'material-ui/TextField';
 import MySkillsView from './MySkillsView';
 import ApiActions from '../ApiActions';
+import * as R from 'ramda';
+
 
 // import {} from '../ApiActions';
 
@@ -14,9 +16,10 @@ class WorkerView extends React.Component {
     this.state = {
       search: '',
       selectValue: null,
-      selectedSKills: [],
-      talents:[],
-      roles: []
+      value: null,
+      talents: [],
+      roles: [],
+      selectedSkills: []
     };
     // this.handleChange = this.handleChange.bind(this)
 
@@ -32,7 +35,12 @@ class WorkerView extends React.Component {
       });
   }
 
-  // handleChange = (event, index, selectValue) => this.setState({selectValue});
+  handleSelectChange(event, index, selectValue) {
+
+    this.setState({
+      selectValue:selectValue})
+  }
+
 
   updateSearch(event) {
     this.setState({
@@ -49,14 +57,21 @@ class WorkerView extends React.Component {
     )
 
   }
+  // handleChange (event, index, value){
+  //   this.setState({value});
+  // }
 
-  handleSkillClick(event) {
-    console.log(event)
-    // this.setState({})
+  handleSkillClick( skill) {
+    console.log(skill)
+    const prevState = R.clone(this.state)
+    this.setState({
+      selectedSkills: [skill].concat(prevState.selectedSkills)
+
+    })
   }
 
   getSortedAndFilteredData() {
-    if (this.state.selectValue){
+    if (this.state.selectValue) {
 
       return (this.state.selectValue[1].filter((data) => {
         return data.toLowerCase().includes(this.state.search.toLowerCase());
@@ -82,15 +97,16 @@ class WorkerView extends React.Component {
               onChange={(event) => this.updateSearch(event)}
             />
           </div>
-          <div className="col-sm-4">
-            <SelectField onChange={this.handleChange} value={this.state.selectValue? this.state.selectValue: null} floatingLabelText={"Vali positsioon"}>
-              {this.state.selectValue ? <MenuItem value={null} primaryText="Kõik positsioonid" /> : null}
-              {this.props.positions.map((position, i) => {
-                  return (<MenuItem key={i} value={position} primaryText={position[0]}/>)
-                }
-              )}
-            </SelectField>
-          </div>
+          {/*<div className="col-sm-4">*/}
+            {/*<SelectField onChange={this.handleChange} value={this.state.selectValue ? this.state.selectValue : null}*/}
+                         {/*floatingLabelText={"Vali positsioon"}>*/}
+              {/*{this.state.selectValue ? <MenuItem value={null} primaryText="Kõik positsioonid"/> : null}*/}
+              {/*{this.props.positions.map((position, i) => {*/}
+                  {/*return (<MenuItem key={i} value={position} primaryText={position[0]}/>)*/}
+                {/*}*/}
+              {/*)}*/}
+            {/*</SelectField>*/}
+          {/*</div>*/}
         </div>
 
         <div className="row">
@@ -100,14 +116,14 @@ class WorkerView extends React.Component {
                 <Chip
                   key={id}
                   style={{display: "inline-block", margin: "4px"}}
-                  onClick={this.handleSkillClick()}
+                  onClick={(e) => this.handleSkillClick({id: id, name: name})}
                 >
                   {name}
                 </Chip> )
             })}
           </div>
         </div>
-        <MySkillsView />
+        <MySkillsView skills={this.state.selectedSkills} name={this.props.name}/>
       </div>
 
     )
