@@ -50,7 +50,7 @@ class App extends Component {
               </div>
               <div className="col-sm-4" style={{ textAlign: 'left', color: '#d3d3d3', paddingTop: '30px' }}>
                 {this.state.viewNum === 1 ? 'TÖÖTAJA VAADE' : ''}
-                {this.state.viewNum === 2 ? 'ÜLEMUSE VAADE' : ''}
+                {this.state.viewNum === 2 ? 'OTSINGU VAADE' : ''}
               </div>
               <div className="col-sm-offset-2 col-sm-2 " style={{ paddingTop: '20px' }}>
 
@@ -83,7 +83,7 @@ class App extends Component {
             />
 
             <FlatButton
-              label={'Sisene ülemusena'}
+              label={'Sisene otsingusse'}
               secondary={true}
               onClick={() => this.setState({
                 viewNum: 2,

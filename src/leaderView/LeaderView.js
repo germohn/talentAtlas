@@ -115,7 +115,7 @@ class LeaderView extends React.Component {
               </div>
           </div>
           <div className="col-md-6">
-            <h3>Minu talendioting:</h3>
+            <h3>Minu talendiotsing:</h3>
             {this.state.selectedTalents.map((skill, i) => {
               return (
                 <Chip

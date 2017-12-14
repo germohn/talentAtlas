@@ -6,6 +6,18 @@ import TextField from 'material-ui/TextField';
 import MySkillsView from './MySkillsView';
 import ApiActions from '../ApiActions';
 import * as R from 'ramda';
+import '../App.css';
+//
+// const styles = {
+//   searchBox: {
+//     margin: "5px",
+//     height: "60px",
+//     width: "75%",
+//     borderColor: "white",
+//     border: "1px",
+//     boxShadow: "#e0e0e0",
+//   }
+// }
 
 
 // import {} from '../ApiActions';
@@ -33,12 +45,18 @@ class WorkerView extends React.Component {
         console.log(result)
         this.setState({roles: result})
       });
+    // ApiActions.getMySkills(this.props.name)
+    //   .then(result => {
+    //     console.log(result)
+    //     // this.setState()
+    //   });
   }
 
   handleSelectChange(event, index, selectValue) {
 
     this.setState({
-      selectValue:selectValue})
+      selectValue: selectValue
+    })
   }
 
 
@@ -48,20 +66,21 @@ class WorkerView extends React.Component {
     });
   }
 
-  renderMySkills() {
-    console.log(this.state.selectValue)
-    return (
-      <div>
+  // renderMySkills() {
+  //   console.log(this.state.selectValue)
+  //   return (
+  //     <div>
+  //
+  //     </div>
+  //   )
+  //
+  // }
 
-      </div>
-    )
-
-  }
   // handleChange (event, index, value){
   //   this.setState({value});
   // }
 
-  handleSkillClick( skill) {
+  handleSkillClick(skill) {
     console.log(skill)
     const prevState = R.clone(this.state)
     this.setState({
@@ -90,22 +109,26 @@ class WorkerView extends React.Component {
         <h2>Töötaja vaade</h2>
         <div className="row">
           <div className="col-sm-6 ">
-            <TextField
-              id="text-field-controlled"
-              floatingLabelText="Otsi oskusi"
-              value={this.state.search}
-              onChange={(event) => this.updateSearch(event)}
-            />
+            <div >
+              <TextField
+                floatingLabelStyle={{color: "#990ae3"}}
+                id="text-field-controlled"
+                floatingLabelText="Otsi oskusi"
+                value={this.state.search}
+                onChange={(event) => this.updateSearch(event)}
+              />
+            </div>
+
           </div>
           {/*<div className="col-sm-4">*/}
-            {/*<SelectField onChange={this.handleChange} value={this.state.selectValue ? this.state.selectValue : null}*/}
-                         {/*floatingLabelText={"Vali positsioon"}>*/}
-              {/*{this.state.selectValue ? <MenuItem value={null} primaryText="Kõik positsioonid"/> : null}*/}
-              {/*{this.props.positions.map((position, i) => {*/}
-                  {/*return (<MenuItem key={i} value={position} primaryText={position[0]}/>)*/}
-                {/*}*/}
-              {/*)}*/}
-            {/*</SelectField>*/}
+          {/*<SelectField onChange={this.handleChange} value={this.state.selectValue ? this.state.selectValue : null}*/}
+          {/*floatingLabelText={"Vali positsioon"}>*/}
+          {/*{this.state.selectValue ? <MenuItem value={null} primaryText="Kõik positsioonid"/> : null}*/}
+          {/*{this.props.positions.map((position, i) => {*/}
+          {/*return (<MenuItem key={i} value={position} primaryText={position[0]}/>)*/}
+          {/*}*/}
+          {/*)}*/}
+          {/*</SelectField>*/}
           {/*</div>*/}
         </div>
 
@@ -115,8 +138,9 @@ class WorkerView extends React.Component {
               return (
                 <Chip
                   key={id}
-                  style={{display: "inline-block", margin: "4px"}}
+                  style={{display: "inline-block", margin: "4px", backgroundColor: "#a0a0a0", color: "#ffffff" }}
                   onClick={(e) => this.handleSkillClick({id: id, name: name})}
+                  labelColor={"#ffffff"}
                 >
                   {name}
                 </Chip> )

@@ -53,6 +53,10 @@ class ApiActions {
 
   }
 
+  static getMySkills(name) {
+    return Api.post('MATCH (p:Person {name: ' + name + ' })-[rel]->(c:concept) return c.name, rel.level as tase')
+  }
+
   /*static queryWithSkills(skills) {
     if (skills.length > 0) {
       return Api.post('MATCH (c:concept)-[x]-(p:Person), (p)-[]->(c2:concept)\n' +

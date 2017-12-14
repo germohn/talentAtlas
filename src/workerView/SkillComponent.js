@@ -93,15 +93,16 @@ class SkillComponent extends React.Component {
             min={0}
             max={3}
             step={1}
+            sliderStyle={{color: "#990ae3"}}
             value={this.state.slider}
             onChange={this.handleSlider}
           />
-          <TextField
-          id="text-field-controlled"
-          floatingLabelText="Täpsustav kommentaar"
-          value={this.state.comment}
-          onChange={this.handleTextChange}
-        />
+          {/*<TextField*/}
+          {/*id="text-field-controlled"*/}
+          {/*floatingLabelText="Täpsustav kommentaar"*/}
+          {/*value={this.state.comment}*/}
+          {/*onChange={this.handleTextChange}*/}
+        {/*/>*/}
           {/*<div >*/}
             {/**/}
           {/*</div>*/}
@@ -117,8 +118,9 @@ class SkillComponent extends React.Component {
               onClick={this.remove}
             />
             <FlatButton
-              label={'Salvest'}
+              label={'Salvesta'}
               primary={true}
+              style={{color: "#990ae3"}}
               onClick={this.saveSkill}
             />
           </div>
