@@ -142,10 +142,11 @@ class LeaderView extends React.Component {
 j                >
                   <CardHeader
                     title={worker[0]}
-                    subtitle={'VAATA PROFIILI'}
+                    subtitle={'Punkte: ' + worker[2]}
                     actAsExpander={true}
                     showExpandableButton={false}
-                    />
+                    subtitleStyle={{position: 'absolute', right: '350px', top: '10px'}}
+                  />
                   <CardText expandable={true}>
                     Kompetentside arv: {worker[1]}
                     <br/>
