@@ -6,12 +6,11 @@ let objectify = a => a.reduce((o, [k, v]) => (o[k] = v, o), {});
 
 class ApiActions {
 
+  static queryAllSkillsForLeader() {
+  return Api.post('MATCH (c:concept) RETURN collect (c.name)')
+     .then(result => result.data[0][0]);
+  }
 
-  //
-  // static queryAllSkills() {
-  //   return Api.post('MATCH (c:concept) RETURN collect (c.name)')
-  //     .then(result => result.data[0][0]);
-  // }
   static queryAllSkills() {
     return Api.post('MATCH (t) \n' +
       'WHERE t:Kompetents or t:concept\n' +
@@ -46,6 +45,23 @@ class ApiActions {
     }
 
   }
+
+  /*static queryWithSkills(skills) {
+    if (skills.length > 0) {
+      return Api.post('MATCH (c:concept)-[x]-(p:Person), (p)-[]->(c2:concept)\n' +
+        'WHERE c.name in [\'' + skills.join('\',\'') + '\']\n' +
+        'WITH p,\n' +
+        '   {paringu_vastuseid: collect(c.name), \n' +
+        '   vastuste_arv: count(x), \n' +
+        '   sobivus_summa: sum(x.level) } as Sobivus, \n' +
+        '   collect(c2.name) as MuudKompetentsid \n' +
+        '   RETURN p.name, Sobivus, MuudKompetentsid')
+        .then(result => result.data);
+    } else {
+      return Promise.resolve([]);
+    }
+
+  }*/
 }
 
 export default ApiActions;

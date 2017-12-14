@@ -37,7 +37,7 @@ class App extends Component {
   render() {
     return (
       <MuiThemeProvider>
-        <div>
+        <div style={{ backgroundColor: '#f2f2f2', height: '100%' }}>
           <div className="App row">
             <nav className="navbar" style={{ backgroundColor: '#ffffff' }}>
 
@@ -79,6 +79,7 @@ class App extends Component {
                 viewNum: 1,
                 userName: this.state.nameTextInput
               })}
+              style={{ backgroundColor: '#00cc66', color: '#ffffff' }}
             />
 
             <FlatButton
@@ -88,6 +89,7 @@ class App extends Component {
                 viewNum: 2,
                 userName: this.state.nameTextInput
               })}
+              style={{ backgroundColor: '#990ae3', color: '#ffffff', marginLeft: '10px' }}
             />
           </div> : ''}
           {this.state.viewNum === 1 ? this.renderInitialView() : ''}
