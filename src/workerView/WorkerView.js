@@ -31,7 +31,7 @@ class WorkerView extends React.Component {
       });
   }
 
-  handleChange = (event, index, selectValue) => this.setState({selectValue});
+  // handleChange = (event, index, selectValue) => this.setState({selectValue});
 
   updateSearch(event) {
     this.setState({
