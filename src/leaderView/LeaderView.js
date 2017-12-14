@@ -1,12 +1,13 @@
 import React from 'react';
 import * as R from 'ramda';
-import { AutoComplete, Card, CardHeader, CardText, Chip, FlatButton } from 'material-ui';
+import { AutoComplete, Card, CardHeader, CardText, Chip, FlatButton, TextField } from 'material-ui';
 import ApiActions from '../ApiActions';
+import Search from 'material-ui-icons/Search';
 
 const initialState = {
   talents: [],
   selectedTalents: [],
-  searchString: '',
+  search: '',
   workers: []
 };
 
@@ -24,7 +25,7 @@ class LeaderView extends React.Component {
     this.searchPeople = this.searchPeople.bind(this);
     this.clearAll = this.clearAll.bind(this);
 
-    ApiActions.queryAllSkills()
+    ApiActions.queryAllSkillsForLeader()
       .then(result => this.setState({talents: result}));
   }
 
@@ -49,92 +50,138 @@ class LeaderView extends React.Component {
   clearAll() {
     this.setState({
       selectedTalents: [],
-      workers: []
+      workers: [],
+      search: ''
     });
   }
 
+  updateSearch(event) {
+    this.setState({
+      search: event.target.value.substr(0, 25)
+    });
+  }
+
+  getSortedAndFilteredData() {
+    return (this.state.talents.filter(talent => {
+      return talent.toLowerCase().includes(this.state.search.toLowerCase());
+    }));
+
+  }
+
   render() {
-    console.log(this.state)
     return (
       <div>
         <div className="row">
-          <div className="col-md-6">
-            <AutoComplete
-              id={'searchAutocomplete'}
-              floatingLabelText={'Vali oskused'}
-              filter={AutoComplete.caseInsensitiveFilter}
-              dataSource={this.state.talents}
-              openOnFocus={true}
-              onNewRequest={item => this.handleTalentSelect(item)}
-              onUpdateInput={searchText => this.setState({
-                searchString: searchText,
-              })}
-              searchText={this.state.searchString}
-              listStyle={listStyle}
-              fullWidth={true}
+          <div className="col-md-6" style={{backgroundColor: '#ffffff'}}>
+            <TextField
+              id="text-field-controlled"
+              floatingLabelText="Otsi kompetentse..."
+              value={this.state.search}
+              onChange={(event) => this.updateSearch(event)}
             />
           </div>
+          {/*<Chip style={{backgroundColor: '#a0a0a0', display: 'inline-flex', marginTop: '2px'}}>
+            <Search
+              style={{color: '#ffffff'}}
+            />
+          </Chip>*/}
           <div className="col-md-6">
             <FlatButton
-              label={'Otsi töötajaid'}
-              primary={true}
+              label={'OTSI TALENTE'}
               onClick={this.searchPeople}
+              style={{ backgroundColor: '#00cc66', color: '#ffffff' }}
             />
 
             <FlatButton
-              label={'Tühjenda kõik'}
-              secondary={true}
+              label={'TÜHISTA'}
               onClick={this.clearAll}
+              style={{ backgroundColor: '#a0a0a0', color: '#ffffff', marginLeft: '10px' }}
             />
           </div>
         </div>
-        <div>
-          {this.state.selectedTalents.length > 0 ?
-            <div>
-              {this.state.selectedTalents.map((skill, i) => {
-                return (
-                  <Chip
-                    onRequestDelete={() => this.handleTalentRemove(skill)}
-                    key={i}
-                    style={{ display: 'inline-flex', marginRight: '2px' }}
-                  >
-                    {skill}
-                  </Chip> )
-              })}
-            </div> : 'Ühtegi oskust pole valitud'
-          }
+        <div className="row">
+          <div className="col-md-6">
+              <div>
+                {this.getSortedAndFilteredData().map((skill, i) => {
+                  return (
+                    <Chip
+                      key={i}
+                      style={{ display: 'inline-flex', margin: '4px' }}
+                      onClick={() => this.handleTalentSelect(skill)}
+                    >
+                      {skill}
+                    </Chip> )
+                })}
+              </div>
+          </div>
+          <div className="col-md-6">
+            <h3>Minu talendioting:</h3>
+            {this.state.selectedTalents.map((skill, i) => {
+              return (
+                <Chip
+                  onRequestDelete={() => this.handleTalentRemove(skill)}
+                  key={i}
+                  style={{ margin: '4px', backgroundColor: '#990ae3' }}
+                  labelStyle={{ color: '#ffffff' }}
+                >
+                  {skill}
+                </Chip> )
+            })}
+          </div>
         </div>
 
-        <div style={{margin: "30px"}}>
-          {this.state.workers.length > 0 ?
-            <div>
-            {this.state.workers.map((worker, i) => {
-            return (
-              <Card
-                key={i}
-              >
-                <CardHeader
-                  title={worker[0]}
-                  actAsExpander={true}
-                  showExpandableButton={true}
-                  />
-                <CardText expandable={true}>
-                  {worker[3].map((skill, i) => {
-                    return (
-                      <Chip
-                        key={i}
-                        style={{padding: "5px", margin: "10px", display: 'inline'}}
-                      >
-                        {skill}
-                      </Chip> )
-                  })}
+          <div style={{margin: "30px"}}>
+            {this.state.workers.length > 0 ?
+              <div>
+                <h3>Minu talendioting:</h3>
+              {this.state.workers.map((worker, i) => {
+              return (
+                <Card
+                  key={i}
+                  style={{marginBottom: "10px"}}
+j                >
+                  <CardHeader
+                    title={worker[0]}
+                    subtitle={'VAATA PROFIILI'}
+                    actAsExpander={true}
+                    showExpandableButton={false}
+                    />
+                  <CardText expandable={true}>
+                    Kompetentside arv: {worker[1]}
+                    <br/>
+                    Punkte: {worker[2]}
+                    <div>
+                    {worker[3].map((skill, i) => {
+                      return (
+                        <Chip
+                          key={i}
+                          style={{margin: "5px", display: 'inline-block', backgroundColor: '#990ae3'}}
+                          labelStyle={{ color: '#ffffff' }}
+                        >
+                          {skill}
+                        </Chip> )
+                    })}
 
-                </CardText>
-              </Card> )
-          })}
-            </div>
-          : 'Töötajaid pole leitud'}
-        </div>
+                    {R.without(worker[3], this.state.selectedTalents)
+                      .map((skill, i) => {
+                        return (
+                          <Chip
+                            key={i}
+                            style={{margin: "5px", display: 'inline-block', backgroundColor: '#d3d3d3'}}
+                            labelStyle={{ textDecoration: 'line-through', color: '#ffffff' }}
+                          >
+                            {skill}
+                          </Chip> )
+                      })
+                    }
+                    </div>
+
+                  </CardText>
+                </Card> )
+            })}
+              </div>
+            : 'Töötajaid pole leitud'}
+          </div>
       </div>
     );
   }
