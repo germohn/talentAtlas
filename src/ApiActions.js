@@ -29,6 +29,13 @@ class ApiActions {
       .then(result => result.data);
   }
 
+  static saveSkillQuery(object){
+    console.log(object.name)
+    return Api.post('MATCH (p:Person {name: \'' + object.name + '\'}), (c:concept {name: \'' +object.skillName + '\'})\n' +
+      'MERGE (p)-[rel:knows_concept]->(c)\n' +
+      'SET rel.level = ' +object.skillLevel  )
+  }
+
   static queryWithSkills(skills) {
     if (skills.length > 0) {
       return Api.post('MATCH (c:concept)-[x]-(p:Person)\n' +

@@ -22,7 +22,7 @@ class App extends Component {
 
   renderInitialView() {
     return (
-      <WorkerView skills={skillMockData.data[0][0]} positions={positionMockData.data}/>
+      <WorkerView name={this.state.nameTextInput}/>
 
     )
   }
