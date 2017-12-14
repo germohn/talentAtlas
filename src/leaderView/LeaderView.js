@@ -50,7 +50,8 @@ class LeaderView extends React.Component {
   clearAll() {
     this.setState({
       selectedTalents: [],
-      workers: []
+      workers: [],
+      search: ''
     });
   }
 
